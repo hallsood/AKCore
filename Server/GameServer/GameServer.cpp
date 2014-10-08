@@ -1604,7 +1604,7 @@ bool CGameServer::CreateTableContainer(int byLoadMethod)
 	str = "data";
     bool bResult = FALSE;
     bResult = g_pTableContainer->Create(flagManager, (char*)str.c_str(), &fileNameList, eLoadMethod, GetACP(), NULL);
-	g_pTableContainer->SaveToFile(flagManager, &fileNameList, false); 
+	//g_pTableContainer->SaveToFile(flagManager, &fileNameList, false); 
 	gs->printOk("==== LOADING GAMETABLES COMPLETE ====");
 	gs->printOk("==== LOADING MOBS / NPC ... ====");
 	mob->Create();

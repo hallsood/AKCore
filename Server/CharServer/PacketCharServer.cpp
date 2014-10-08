@@ -335,6 +335,8 @@ void CClientSession::SendCharWaitCheckReq(CNtlPacket * pPacket)
 //--------------------------------------------------------------------------------------//
 void CClientSession::SendCharSelectReq(CNtlPacket * pPacket)
 {
+	
+	CCharServer * app = (CCharServer*) NtlSfxGetApp();
 	sUC_CHARACTER_SELECT_REQ * req = (sUC_CHARACTER_SELECT_REQ*)pPacket->GetPacketData();
 	CNtlPacket packet(sizeof(sCU_CHARACTER_SELECT_RES));
 	sCU_CHARACTER_SELECT_RES * res = (sCU_CHARACTER_SELECT_RES *)packet.GetPacketData();
@@ -342,7 +344,7 @@ void CClientSession::SendCharSelectReq(CNtlPacket * pPacket)
 	res->wResultCode = CHARACTER_SUCCESS;
 	res->charId = req->charId; 
 	strcpy_s((char*)res->abyAuthKey, NTL_MAX_SIZE_AUTH_KEY, "Dbo");
-	strcpy_s(res->szGameServerIP, sizeof(res->szGameServerIP), IP_SERVER_ALL);
+	strcpy_s(res->szGameServerIP, sizeof(res->szGameServerIP), app->GetConfigFileExternalIP());
 	res->wGameServerPortForClient = 30001;
 
 	packet.SetPacketLen( sizeof(sCU_CHARACTER_SELECT_RES) );

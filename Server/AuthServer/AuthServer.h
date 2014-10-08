@@ -17,6 +17,7 @@ struct sSERVERCONFIG
 {
 	CNtlString		strClientAcceptAddr;
 	WORD			wClientAcceptPort;
+	CNtlString		ExternalIP;
 	CNtlString		Host;
 	CNtlString		User;
 	CNtlString		Password;
@@ -119,6 +120,11 @@ public:
 	{
 		return m_config.Database.c_str();
 	}
+	const char*		GetConfigFileExternalIP()
+	{
+		std::cout << m_config.ExternalIP.c_str() << std::endl;
+		return m_config.ExternalIP.c_str();
+	}
 	int	OnInitApp()
 	{
 		m_nMaxSessionCount = MAX_NUMOF_SESSION;
@@ -169,6 +175,10 @@ public:
 		if( NTL_SUCCESS != rc )
 		{
 			return rc;
+		}
+		if( !file.Read("IPAddress", "Address", m_config.ExternalIP) )
+		{
+			return NTL_ERR_SYS_CONFIG_FILE_READ_FAIL;
 		}
 		if( !file.Read("Auth Server", "Address", m_config.strClientAcceptAddr) )
 		{
